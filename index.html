@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Batra - IIFCL IT Internship Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for animations and subtle effects not easily done with pure Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Lighter background for contrast */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header background with subtle gradient */
+        .header-bg {
+            background: linear-gradient(135deg, #004d40 0%, #00796b 100%); /* Dark teal to lighter teal */
+            color: #ffffff;
+            position: relative;
+            overflow: hidden; /* Hide overflow for any potential background patterns */
+        }
+
+        /* Subtle pattern for header (optional, can be removed) */
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Card base styling */
+        .card {
+            background-color: #ffffff;
+            border-radius: 1rem; /* rounded-2xl */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08); /* shadow-xl */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        /* Card hover effect */
+        .card:not(.card-disabled):hover {
+            transform: translateY(-5px); /* Lift effect */
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+        }
+
+        /* Disabled card styling */
+        .card-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(50%); /* Desaturate for disabled look */
+        }
+
+        /* Button base styling */
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem; /* Larger padding for better touch targets */
+            border-radius: 0.75rem; /* rounded-xl */
+            font-weight: 600; /* Semi-bold */
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            text-decoration: none; /* Remove underline */
+        }
+
+        /* Button specific colors */
+        .link-button-primary {
+            background-color: #00796b; /* Main teal */
+            color: #ffffff;
+        }
+        .link-button-primary:hover:not(:disabled) {
+            background-color: #004d40; /* Darker teal on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+        }
+
+        .link-button-disabled {
+            background-color: #cbd5e1; /* Gray-300 */
+            color: #64748b; /* Slate-600 */
+            cursor: not-allowed;
+        }
+
+        /* Scroll-to-top button */
+        #scrollToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s;
+            z-index: 1000;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #004d40;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="header-bg py-16 text-center shadow-2xl">
+        <div class="container mx-auto px-4 relative z-10">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-3 leading-tight animate-fade-in-down">Aditya Batra</h1>
+            <p class="text-2xl md:text-3xl font-light mb-2 animate-fade-in-up">Information Technology Intern</p>
+            <p class="text-xl md:text-2xl font-light animate-fade-in-up">at <span class="font-semibold">IIFCL (India Infrastructure Finance Company Limited)</span></p>
+            <p class="text-lg md:text-xl mt-3 font-light animate-fade-in-up">July 7, 2025 – August 6, 2025</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-16">
+
+        <!-- Internship Overview Section -->
+        <section class="mb-16">
+            <div class="card p-8 md:p-10">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">Internship Overview</h2>
+                <p class="text-lg text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
+                    During my 4-week Information Technology internship at <strong class="text-[#00796b]">IIFCL</strong>, I've been focused on gaining a comprehensive understanding of their core IT systems and operations. This has involved exploring various facets including their robust <strong class="text-[#00796b]">cybersecurity protocols</strong>, the intricacies of their <strong class="text-[#00796b]">ERP system utilizing SAP</strong>, the foundational <strong class="text-[#00796b]">IT infrastructure</strong>, and the application of <strong class="text-[#00796b]">data analytics</strong> within their financial operations. My work has primarily revolved around understanding these complex systems and transforming information into more accessible and interactive formats.
+                </p>
+            </div>
+        </section>
+
+        <hr class="border-t-4 border-gray-300 my-16 rounded-full opacity-75">
+
+        <!-- Weekly Progress Section -->
+        <section>
+            <h2 class="text-4xl font-bold text-gray-800 mb-10 text-center">Weekly Progress</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Week 1 Card -->
+                <div class="card p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Week 1: Market Analysis Infographic</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed text-sm">
+                            Developed a single-page application (SPA) infographic for IIFCL market analysis. This project leveraged HTML, Tailwind CSS, and Chart.js to deliver responsive, canvas-based data visualizations and structured HTML/CSS diagrams. The objective was to present complex financial and market data from source material into an easily digestible and visually engaging format with a vibrant Material Design aesthetic.
+                        </p>
+                    </div>
+                    <a href="https://iifcl.adityabatra.xyz/week1/" target="_blank" rel="noopener noreferrer" class="link-button link-button-primary mt-4 self-start">
+                        View Week 1 Progress
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0l-7 7m7-7v6"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Week 2 Card -->
+                <div class="card p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Week 2: Interactive IT Report</h3>
+                        <p class="text-gray-700 mb-4 leading-relaxed text-sm">
+                            Transformed the IIFCL IT policy and infrastructure report into a single-page interactive web application. This app features a dashboard layout with thematic sections, interactive visualizations using Chart.js for financial data, and HTML/CSS for diagrams (IT infrastructure, SAP) and accordions (RBI framework). The aim was to create an interactive, visual, and easy-to-explore version of the report, highlighting key insights like financial performance and cybersecurity posture, with a clean, responsive UI using Tailwind CSS.
+                        </p>
+                    </div>
+                    <a href="https://iifcl.adityabatra.xyz/week2/" target="_blank" rel="noopener noreferrer" class="link-button link-button-primary mt-4 self-start">
+                        View Week 2 Progress
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0l-7 7m7-7v6"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Week 3 Card -->
+                <div class="card card-disabled p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-600 mb-3">Week 3 Progress <span class="inline-block ml-2 px-3 py-1 text-xs font-bold text-orange-700 bg-orange-100 rounded-full">Coming Soon</span></h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed text-sm">
+                            Details about the projects and learning from Week 3 will be updated here shortly. Stay tuned!
+                        </p>
+                    </div>
+                    <button class="link-button link-button-disabled mt-4 self-start" disabled>
+                        View Week 3 Progress
+                    </button>
+                </div>
+
+                <!-- Week 4 Card -->
+                <div class="card card-disabled p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-600 mb-3">Week 4 Progress <span class="inline-block ml-2 px-3 py-1 text-xs font-bold text-orange-700 bg-orange-100 rounded-full">Coming Soon</span></h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed text-sm">
+                            Details about the projects and learning from Week 4 will be updated here shortly.
+                        </p>
+                    </div>
+                    <button class="link-button link-button-disabled mt-4 self-start" disabled>
+                        View Week 4 Progress
+                    </button>
+                </div>
+
+                <!-- Final Report Card -->
+                <div class="card card-disabled p-6 flex flex-col justify-between lg:col-span-1 md:col-span-2">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-600 mb-3">Final Internship Report <span class="inline-block ml-2 px-3 py-1 text-xs font-bold text-orange-700 bg-orange-100 rounded-full">Coming Soon</span></h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed text-sm">
+                            My comprehensive final report, summarizing all projects, learnings, and contributions during the internship, will be published here upon completion.
+                        </p>
+                    </div>
+                    <button class="link-button link-button-disabled mt-4 self-start" disabled>
+                        View Final Report
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-8 mt-16 rounded-t-2xl shadow-inner">
+        <div class="container mx-auto px-4 text-center text-sm">
+            &copy; {new Date().getFullYear()} Aditya Batra. All rights reserved.
+            <p class="mt-2 text-gray-400">Designed with <span class="text-red-500">&hearts;</span> and Tailwind CSS</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" title="Go to top">↑</button>
+
+    <script>
+        // JavaScript for Scroll to Top Button
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollToTopBtn.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll
+        };
+    </script>
+
+</body>
+</html>
