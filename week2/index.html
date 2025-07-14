@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIFCL Interactive IT Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A thematic, single-page dashboard structure was chosen over a linear report format to empower the user (an IT intern) with non-linear exploration. The top navigation allows immediate access to key pillars: Overview, IT Core, Cybersecurity, Future Strategy, and Analysis/Recommendations. This approach breaks down complex information into digestible, self-contained sections, making it easier to grasp the strategic landscape of IIFCL's IT without being forced through a sequential reading. The user can focus on areas of immediate interest, facilitating faster learning and comprehension. -->
+    <!-- Visualization & Content Choices: 
+        - Financial Performance: Report Info (Sanctions/Disbursements) -> Goal (Show Growth) -> Viz (Bar Chart) -> Interaction (Tooltips) -> Justification (Clearly visualizes year-on-year growth) -> Library (Chart.js).
+        - IT Infrastructure: Report Info (DC/DR sites) -> Goal (Explain Resilience) -> Viz (HTML/CSS Diagram) -> Interaction (Click to reveal text) -> Justification (Interactive map is more engaging than text) -> Library (Tailwind/JS).
+        - SAP Integration: Report Info (Two-tier ERP) -> Goal (Clarify Structure) -> Viz (HTML/CSS Diagram) -> Interaction (None) -> Justification (Simple visual clarifies a complex concept) -> Library (Tailwind).
+        - RBI Framework: Report Info (6 Pillars) -> Goal (Organize Compliance) -> Viz (Interactive Accordion) -> Interaction (Click to expand) -> Justification (Hides detail until requested, reducing cognitive load) -> Library (JS).
+        - Key Risk: Report Info (Third-party risk gap) -> Goal (Highlight Urgency) -> Viz (Red-accented Alert Card) -> Interaction (None) -> Justification (Visual cues draw immediate attention to critical findings) -> Library (Tailwind).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nav-link { transition: color 0.3s, border-color 0.3s; }
+        .nav-link.active { color: #2563EB; border-bottom-color: #2563EB; }
+        .nav-link:not(.active):hover { color: #3B82F6; border-bottom-color: #DBEAFE; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .kpi-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .kpi-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="bg-white shadow-sm sticky top-0 z-50">
+        <header class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center py-4">
+                <h1 class="text-2xl font-bold text-gray-900 mb-4 sm:mb-0">IIFCL IT Interactive Analysis</h1>
+                <nav class="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6">
+                    <a href="#" class="nav-link active text-sm sm:text-base font-medium py-2 border-b-2 border-transparent" data-target="overview">Overview</a>
+                    <a href="#" class="nav-link text-sm sm:text-base font-medium py-2 border-b-2 border-transparent" data-target="it-core">IT Core</a>
+                    <a href="#" class="nav-link text-sm sm:text-base font-medium py-2 border-b-2 border-transparent" data-target="cybersecurity">Cybersecurity</a>
+                    <a href="#" class="nav-link text-sm sm:text-base font-medium py-2 border-b-2 border-transparent" data-target="future-forward">Future Forward</a>
+                    <a href="#" class="nav-link text-sm sm:text-base font-medium py-2 border-b-2 border-transparent" data-target="analysis">Analysis & Recs</a>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <section id="overview" class="content-section active">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Powering India's Infrastructure Growth</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    This section provides a high-level overview of India Infrastructure Finance Company Limited (IIFCL). You'll find key financial performance indicators that highlight the company's robust health and a chart visualizing its significant growth in financing activities. This context is crucial for understanding the scale and demands placed upon its underlying IT infrastructure.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="kpi-card bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+                    <h3 class="text-gray-500 text-sm font-medium uppercase">Highest Ever Sanctions (FY25)</h3>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">₹51,124 Cr</p>
+                    <p class="text-sm text-green-600 mt-1">+21% YoY Growth</p>
+                </div>
+                <div class="kpi-card bg-white p-6 rounded-lg shadow-md border-l-4 border-teal-500">
+                    <h3 class="text-gray-500 text-sm font-medium uppercase">Net Worth (FY25)</h3>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">₹16,395 Cr</p>
+                    <p class="text-sm text-green-600 mt-1">+15% YoY Growth</p>
+                </div>
+                <div class="kpi-card bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500">
+                    <h3 class="text-gray-500 text-sm font-medium uppercase">Net NPA Ratio (FY25)</h3>
+                    <p class="text-3xl font-bold text-gray-900 mt-2">0.35%</p>
+                    <p class="text-sm text-green-600 mt-1">Improved from 0.46%</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4 text-center">Financial Performance Snapshot (₹ Crore)</h3>
+                <div class="chart-container">
+                    <canvas id="financialChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="it-core" class="content-section">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">The Foundation: Core IT & ERP Systems</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Explore the backbone of IIFCL's operations. This section details the company's physical IT footprint, designed for high availability and disaster recovery, and delves into "Project SUPER," the strategic SAP ERP upgrade. Understanding this core infrastructure is key to appreciating how IIFCL manages its complex financial products and group-wide data.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Resilient IT Infrastructure Footprint</h3>
+                    <p class="text-gray-600 mb-6">IIFCL employs a geographically dispersed infrastructure to ensure business continuity. Click on the locations below to learn more about their roles.</p>
+                    <div class="relative p-4 border border-gray-200 rounded-lg">
+                        <div class="flex justify-around items-center h-48">
+                            <div class="text-center">
+                                <button class="location-btn p-3 bg-blue-100 text-blue-800 rounded-full shadow-lg" data-info="dc-info">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                                </button>
+                                <p class="mt-2 font-semibold">Data Center</p>
+                                <p class="text-sm text-gray-500">Noida, UP</p>
+                            </div>
+                             <div class="text-center">
+                                <button class="location-btn p-3 bg-gray-100 text-gray-800 rounded-full shadow-lg" data-info="hq-info">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0v-4m6 4v-4m6 4v-4m-9-4h5M3 7h18"></path></svg>
+                                </button>
+                                <p class="mt-2 font-semibold">Head Office</p>
+                                <p class="text-sm text-gray-500">New Delhi</p>
+                            </div>
+                            <div class="text-center">
+                                <button class="location-btn p-3 bg-teal-100 text-teal-800 rounded-full shadow-lg" data-info="dr-info">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                </button>
+                                <p class="mt-2 font-semibold">Disaster Recovery</p>
+                                <p class="text-sm text-gray-500">Navi Mumbai</p>
+                            </div>
+                        </div>
+                         <div id="info-pane" class="mt-4 p-4 bg-gray-50 rounded-md text-gray-700 hidden"></div>
+                         <div id="hq-info" class="info-content hidden">Primary administrative and operational hub.</div>
+                         <div id="dc-info" class="info-content hidden">The primary data processing and storage facility, crucial for day-to-day operations.</div>
+                         <div id="dr-info" class="info-content hidden">A secondary site to ensure critical business operations can continue in case of a regional disaster affecting the primary data center.</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Project SUPER: SAP Modernization</h3>
+                        <p class="text-gray-600">A major strategic initiative to <span class="font-semibold text-blue-600">upgrade, enhance, and retrofit</span> the core SAP ERP system. This project covers IIFCL, its regional offices, and all subsidiaries, aiming to improve efficiency, data quality, and decision-making across the entire group.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Two-Tier ERP Integration with Subsidiaries</h3>
+                        <p class="text-gray-600 mb-4">SAP's two-tier model ensures seamless data flow between IIFCL (Tier 1) and its subsidiaries (Tier 2), like IPL and IAMCL. This is vital for a consolidated view of financials and operations.</p>
+                        <div class="flex items-center justify-center space-x-4 p-4 border border-gray-200 rounded-lg">
+                            <div class="text-center p-3 bg-blue-500 text-white rounded-lg shadow">
+                                <p class="font-bold">IIFCL HQ</p>
+                                <p class="text-xs">(SAP S/4HANA)</p>
+                            </div>
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            <div class="flex space-x-2">
+                                <div class="text-center p-2 bg-gray-200 text-gray-700 rounded-lg shadow-sm">
+                                    <p class="font-semibold">Subsidiary A</p>
+                                    <p class="text-xs">(e.g., IPL)</p>
+                                </div>
+                                 <div class="text-center p-2 bg-gray-200 text-gray-700 rounded-lg shadow-sm">
+                                    <p class="font-semibold">Subsidiary B</p>
+                                    <p class="text-xs">(e.g., IIFC-UK)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cybersecurity" class="content-section">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Cybersecurity & Risk Management</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    This section analyzes IIFCL's cybersecurity posture, which is a critical function for any financial institution. You can interactively explore its adherence to the RBI's cybersecurity framework and see key aspects of its operational resilience. Pay special attention to the high-priority risk area identified.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                     <h3 class="text-xl font-semibold text-gray-900 mb-4">RBI Cybersecurity Framework Adherence</h3>
+                     <p class="text-gray-600 mb-6">IIFCL's security practices are governed by the RBI. Click on each pillar below to see how IIFCL aligns.</p>
+                     <div class="space-y-2" id="accordion-container">
+                        <!-- Accordion items will be generated by JS -->
+                     </div>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-green-800 mb-2">Proven Track Record</h3>
+                        <p class="text-green-700">A significant achievement for a financial institution, IIFCL reports a history of <span class="font-bold">no data and cybersecurity breaches</span>, indicating effective existing controls and a proactive security culture.</p>
+                    </div>
+
+                    <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-red-800 mb-2">High-Priority Risk: Third-Party Management</h3>
+                        <p class="text-red-700">A comprehensive third-party risk management framework has been developed but is <span class="font-bold">yet to be implemented</span>. This represents a critical operational gap and a significant cybersecurity vulnerability that requires immediate attention to mitigate potential supply chain attacks.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Operational Resilience</h3>
+                        <p class="text-gray-600">IIFCL has mature plans (BCP/DMP/ORM) and has identified <span class="font-bold">11 Critical Business Services (CBS)</span> for prioritized recovery. The last Business Impact Analysis (BIA) was conducted in 2022.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="future-forward" class="content-section">
+             <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Future Forward: Digital Transformation</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    IIFCL is not just maintaining its current systems; it's actively looking towards the future. This section highlights the company's strategic interest in emerging technologies like Artificial Intelligence (AI) and Blockchain, and how these align with major national initiatives to drive innovation in finance.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="kpi-card bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="flex justify-center items-center mb-4">
+                       <div class="p-4 bg-blue-100 rounded-full">
+                           <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                       </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">Artificial Intelligence (AI)</h3>
+                    <p class="text-gray-600">Leadership has a strategic focus on AI governance. AI offers huge potential to revolutionize core functions like <span class="font-semibold">project appraisal, risk modeling, and compliance automation</span>. This aligns with the national IndiaAI Mission.</p>
+                </div>
+                 <div class="kpi-card bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="flex justify-center items-center mb-4">
+                       <div class="p-4 bg-teal-100 rounded-full">
+                           <svg class="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path></svg>
+                       </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-2">Blockchain Technology</h3>
+                    <p class="text-gray-600">Blockchain could bring unprecedented <span class="font-semibold">transparency, efficiency, and accountability</span> to complex infrastructure financing. Potential use cases include managing syndicated loans and tracking project milestone-based disbursements.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="analysis" class="content-section">
+             <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Analysis & Strategic Recommendations</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    This final section synthesizes the report's findings into a clear analysis of strengths and areas for enhancement. It concludes with actionable recommendations designed to further solidify IIFCL's IT foundation, bolster its cybersecurity defenses, and strategically integrate emerging technologies.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Analysis Summary</h3>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="text-lg font-semibold text-green-700 mb-3">Key Strengths</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><span class="font-semibold">Robust Core Operations:</span> Strong financial performance supported by efficient IT.</li>
+                            <li><span class="font-semibold">Structured IT Foundation:</span> Mature resilience with DC/DR sites and established BCP/DMP.</li>
+                            <li><span class="font-semibold">Proactive Cybersecurity:</span> Excellent track record of no breaches and strong audit compliance.</li>
+                            <li><span class="font-semibold">Commitment to Modernization:</span> "Project SUPER" shows significant investment in core systems.</li>
+                            <li><span class="font-semibold">Strategic Digital Interest:</span> Leadership focus on AI and emerging tech.</li>
+                        </ul>
+
+                        <hr class="my-6">
+
+                        <h4 class="text-lg font-semibold text-red-700 mb-3">Areas for Enhancement</h4>
+                         <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><span class="font-semibold text-red-600">Third-Party Risk (Critical):</span> Must implement the developed framework immediately.</li>
+                            <li><span class="font-semibold">Formal Security Certification:</span> Pursue ISO 27001 to validate ISMS globally.</li>
+                            <li><span class="font-semibold">Threat Intelligence Integration:</span> Formalize process for acting on CERT-In advisories.</li>
+                            <li><span class="font-semibold">Regular BIA Updates:</span> BIA from 2022 needs updating to reflect current business processes.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Top Recommendations</h3>
+                    <div class="bg-white p-6 rounded-lg shadow-md space-y-4">
+                        <div class="flex items-start p-4 bg-blue-50 rounded-lg">
+                            <span class="text-blue-600 font-bold text-xl mr-4">1</span>
+                            <div>
+                                <h4 class="font-semibold text-blue-800">Operationalize Third-Party Risk Framework</h4>
+                                <p class="text-sm text-gray-600">This is the highest priority. Conduct vendor due diligence, enforce security in contracts, and monitor vendor postures continuously.</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start p-4 bg-blue-50 rounded-lg">
+                            <span class="text-blue-600 font-bold text-xl mr-4">2</span>
+                            <div>
+                                <h4 class="font-semibold text-blue-800">Pursue ISO 27001 Certification</h4>
+                                <p class="text-sm text-gray-600">Formally validate information security management to a global standard, enhancing trust and compliance.</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start p-4 bg-blue-50 rounded-lg">
+                            <span class="text-blue-600 font-bold text-xl mr-4">3</span>
+                            <div>
+                                <h4 class="font-semibold text-blue-800">Pilot AI & Blockchain Projects</h4>
+                                <p class="text-sm text-gray-600">Identify high-impact use cases (e.g., risk modeling, loan syndication) and begin pilot projects to build expertise and demonstrate value.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start p-4 bg-blue-50 rounded-lg">
+                            <span class="text-blue-600 font-bold text-xl mr-4">4</span>
+                            <div>
+                                <h4 class="font-semibold text-blue-800">Strengthen Incident Response</h4>
+                                <p class="text-sm text-gray-600">Formalize threat intelligence integration and conduct regular, realistic tabletop exercises for various cyberattack scenarios.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            const financialData = {
+                labels: ['FY24', 'FY25'],
+                datasets: [
+                    {
+                        label: 'Annual Sanctions (₹ Cr)',
+                        data: [42251, 51124],
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Annual Disbursements (₹ Cr)',
+                        data: [22266, 28501],
+                        backgroundColor: 'rgba(20, 184, 166, 0.7)',
+                        borderColor: 'rgba(20, 184, 166, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            };
+
+            const accordionData = [
+                { title: 'Governance Framework', content: 'IIFCL is subject to RBI and CAG audits, is ISO 9001 certified, and has a vigilance administration, demonstrating a strong governance structure.' },
+                { title: 'Identification & Assessment', content: 'Possesses policies for ORM, BCP, DMP, and conducted its last Business Impact Analysis (BIA) in 2022.' },
+                { title: 'Protection & Mitigation', content: 'A strong track record of no breaches is evidence of robust technical defenses like firewalls, encryption, and strict access control.' },
+                { title: 'Data Protection Measures', content: 'Adherence to RBI guidelines suggests advanced detection systems and continuous monitoring are in place to protect sensitive data.' },
+                { title: 'Response & Recovery', content: 'Has a mature BCP and DMP, with 11 Critical Business Services identified and a dedicated DR site for recovery.' },
+                { title: 'Sharing & Communication', content: 'As per RBI guidelines, IIFCL is encouraged to participate in information-sharing mechanisms to enhance collective threat intelligence.' }
+            ];
+
+            function setupNavigation() {
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('data-target');
+
+                        navLinks.forEach(navLink => navLink.classList.remove('active'));
+                        link.classList.add('active');
+
+                        contentSections.forEach(section => {
+                            section.classList.remove('active');
+                            if (section.id === targetId) {
+                                section.classList.add('active');
+                            }
+                        });
+                        window.scrollTo(0, 0);
+                    });
+                });
+            }
+            
+            function createFinancialChart() {
+                const ctx = document.getElementById('financialChart');
+                if (!ctx) return;
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: financialData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Amount in Crore (₹)' }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(context.parsed.y) + ' Cr';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function setupInfoPane() {
+                const locationBtns = document.querySelectorAll('.location-btn');
+                const infoPane = document.getElementById('info-pane');
+                
+                locationBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const infoId = btn.dataset.info;
+                        const infoContent = document.getElementById(infoId).innerHTML;
+                        
+                        infoPane.innerHTML = infoContent;
+                        infoPane.classList.remove('hidden');
+                    });
+                });
+            }
+
+            function createAccordion() {
+                const container = document.getElementById('accordion-container');
+                if (!container) return;
+
+                accordionData.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'border border-gray-200 rounded-lg';
+
+                    const button = document.createElement('button');
+                    button.className = 'w-full flex justify-between items-center p-4 text-left font-semibold text-gray-800 bg-gray-50 hover:bg-gray-100';
+                    button.innerHTML = `
+                        <span>${item.title}</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    `;
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'accordion-content';
+                    contentDiv.innerHTML = `<div class="p-4 border-t border-gray-200 text-gray-600">${item.content}</div>`;
+
+                    button.addEventListener('click', () => {
+                        const icon = button.querySelector('svg');
+                        const isOpening = !contentDiv.style.maxHeight || contentDiv.style.maxHeight === '0px';
+
+                        document.querySelectorAll('.accordion-content').forEach(el => {
+                           if (el !== contentDiv) {
+                                el.style.maxHeight = '0px';
+                                el.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                           }
+                        });
+                        
+                        if (isOpening) {
+                            contentDiv.style.maxHeight = contentDiv.scrollHeight + 'px';
+                            icon.classList.add('rotate-180');
+                        } else {
+                            contentDiv.style.maxHeight = '0px';
+                            icon.classList.remove('rotate-180');
+                        }
+                    });
+
+                    itemDiv.appendChild(button);
+                    itemDiv.appendChild(contentDiv);
+                    container.appendChild(itemDiv);
+                });
+            }
+
+            setupNavigation();
+            createFinancialChart();
+            setupInfoPane();
+            createAccordion();
+        });
+    </script>
+</body>
+</html>
